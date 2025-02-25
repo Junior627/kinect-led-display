@@ -19,16 +19,27 @@ find_package(OpenGL COMPONENTS OpenGL)
 find_package(GLUT)
 
 if (Threads_FOUND AND OpenGL_OpenGL_FOUND AND GLUT_FOUND)
+
+
+  #include_directories(../matrix/lib)
+  #include_directories(../matrix/include)
+  #file(GLOB_RECURSE RGB_SRC_FILES ../matrix/lib/*.cc)
+  #file(GLOB_RECURSE RGB_HEADER_FILES ../matrix/include/*.h)
+  include_directories(../rpi_ws281x)
+  file(GLOB_RECURSE LED_HEADER_FILES ../rpi_ws281x/*.h)
+
+  
+
   include_directories(${THREADS_PTHREADS_INCLUDE_DIR} ${OPENGL_INCLUDE_DIR} ${GLUT_INCLUDE_DIR})
 
-  add_executable(freenect-glview glview.c)
+  add_executable(freenect-glview glview.c ${LED_SRC_FILES} ${LED_HEADER_FILES})
   add_executable(freenect-regview regview.c)
   add_executable(freenect-hiview hiview.c)
   add_executable(freenect-chunkview chunkview.c)
   add_executable(freenect-micview micview.c)
 
   include(ChooseOpenGLTarget)
-  target_link_libraries(freenect-glview freenect "${OPENGL_TARGET}" GLUT::GLUT ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIB})
+  target_link_libraries(freenect-glview -l:libws2811.a freenect "${OPENGL_TARGET}" GLUT::GLUT ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIB})
   target_link_libraries(freenect-regview freenect "${OPENGL_TARGET}" GLUT::GLUT ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIB})
   target_link_libraries(freenect-hiview freenect "${OPENGL_TARGET}" GLUT::GLUT ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIB})
   target_link_libraries(freenect-chunkview freenect "${OPENGL_TARGET}" GLUT::GLUT ${CMAKE_THREAD_LIBS_INIT} ${MATH_LIB})
