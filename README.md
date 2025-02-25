@@ -1,6 +1,11 @@
-libfreenect
+Kinect LED Display
 ===========
 
+This is a modified version of the libfreenect project by OpenKinect.
+
+The Kinect LED Display is the combination of an LED Matrix and the Kinect's depth sensors to capture a rough approximation of any object's silhouette. 
+
+I will keep the same instructions for the libfreenect intact at the bottom
 libfreenect is a userspace driver for the Microsoft Kinect.
 It runs on Linux, OSX, and Windows and supports
 
